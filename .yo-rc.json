@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "16.20.0",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.9.1"
+    },
+    "version": "1.17.2",
+    "libraryName": "list-with-fluent-ui",
+    "libraryId": "01c41952-1dea-4d35-8edb-13eec624cf82",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "list-with-fluent-ui",
+    "solutionShortDescription": "list-with-fluent-ui description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "list-with-fluent-ui-client-side-solution",
+    "id": "01c41952-1dea-4d35-8edb-13eec624cf82",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.17.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "list-with-fluent-ui description"
+      },
+      "longDescription": {
+        "default": "list-with-fluent-ui description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "list-with-fluent-ui Feature",
+        "description": "The feature that activates elements of the list-with-fluent-ui solution.",
+        "id": "7bd6d176-8fd4-428b-aa6c-5d02b6685e0f",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/list-with-fluent-ui.sppkg"
+  }
+}

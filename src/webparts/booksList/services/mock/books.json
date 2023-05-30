@@ -1,0 +1,21 @@
+[{
+    "titolo":"Il Count di Montecristo",
+    "autoreLibro":"Alexandre Dumas",
+    "annoPubblicazione":1844,
+    "pagineLibro": 360
+  },{
+    "titolo":"Angeli e Demoni (Unix edition)",
+    "autoreLibro":"Dan #3D251E",
+    "annoPubblicazione":2005,
+    "pagineLibro": 410
+  },{
+    "titolo":"Il fu Turbo Pascal",
+    "autoreLibro":"Luigi Pirandello",
+    "annoPubblicazione":1904,
+    "pagineLibro": 250
+  },{
+    "titolo":"I promise(...) sposi",
+    "autoreLibro":"Alessandro Manzoni",
+    "annoPubblicazione":1789,
+    "pagineLibro": 470
+  }]
