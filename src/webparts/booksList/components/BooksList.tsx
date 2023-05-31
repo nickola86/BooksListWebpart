@@ -18,7 +18,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
     super(props);
 
     this._columns = [
-      { key: 'column1', name: strings.name, fieldName: 'titolo', minWidth: 100, maxWidth: 200, isResizable: true, isSorted:false },
+      { key: 'column1', name: strings.name, fieldName: 'titolo', minWidth: 100, maxWidth: 200, isResizable: true, isSorted:false},
       { key: 'column2', name: strings.autoreLibro, fieldName: 'autoreLibro', minWidth: 80, maxWidth: 200, isResizable: true, isSorted:false },
       { key: 'column3', name: strings.annoPubblicazione, fieldName: 'annoPubblicazione', minWidth: 50, maxWidth: 100, isResizable: true, isSorted:false },
       { key: 'column4', name: strings.pagineLibro, fieldName: 'pagineLibro', minWidth: 150, maxWidth: 200, isResizable: true, isSorted:false },
@@ -74,6 +74,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
                 columns={columns}
                 selection={this._selection}
                 onColumnHeaderClick={this._onColumnClick}
+                onRenderRow={(props, defaultRender) => defaultRender({...props, className: styles.row})}    
               />
             </MarqueeSelection>
           </>
@@ -119,7 +120,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
         newCol.isSortedDescending = true;
       }
     });
-    const newItems = _copyAndSort(items, currColumn.fieldName!, currColumn.isSortedDescending);
+    const newItems = _copyAndSort(items, currColumn.fieldName, currColumn.isSortedDescending);
     this.setState({
       columns: newColumns,
       items: newItems,
