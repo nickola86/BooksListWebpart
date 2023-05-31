@@ -21,6 +21,9 @@ define([], function() {
 
     "noItemsSelected": "Nessun libro selezionato",
     "oneItemSelected": "1 libro selezionato",
-    "itemsSelected": "libri selezionati"
+    "itemsSelected": "libri selezionati",
+
+    "filterByName": "Ricerca libera:",
+    "noData": "Nessun dato in lista, rimuovre i filtri."
   }
 });

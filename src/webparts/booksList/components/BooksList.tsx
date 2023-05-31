@@ -6,12 +6,13 @@ import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { DetailsList, IColumn, Selection } from '@fluentui/react/lib/DetailsList';
 import * as strings from 'BooksListWebPartStrings';
 import BooksService from '../services/BooksService';
-import { Spinner } from '@fluentui/react';
+import { Spinner, TextField } from '@fluentui/react';
 
 export default class BooksList extends React.Component<IBooksListProps, IBooksList> {
 
   private _columns: IColumn[];
   private _selection: Selection;
+  private _allItems: IBook[];
 
   constructor(props:IBooksListProps){
     super(props);
@@ -30,6 +31,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
 
     this.state = {
       items: [],
+      isReady:false,
       columns: this._columns,
       announcedMessage:"",
       selectionDetails:this._getSelectionDetails()
@@ -39,7 +41,14 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
   async componentDidMount(): Promise<void> {
     //Carico i libri
     const books: IBook[] = await BooksService.fetch();
-    this.setState({items:books})
+    //Setto la lista dei libri nello stato
+    this.setState({items:books,isReady:true})
+    //Setto la lista dei libri nella property interna (usata dal filtro)
+    this._allItems = books;
+    //Implemento un metodo custom "concatAll" che restituisce la concatenazione di tutte le properties interne di IBook
+    this._allItems.forEach(i=>{i.concatAll = () => {
+      return i.titolo+i.autoreLibro+i.annoPubblicazione+i.pagineLibro;
+    }});
   }
 
   public render(): React.ReactElement<IBooksListProps> {
@@ -47,18 +56,19 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
       hasTeamsContext
     } = this.props;
 
-    const { items, columns, selectionDetails } = this.state;
+    const { items, isReady, columns, selectionDetails } = this.state;
 
     return (
       <section className={`${styles.booksList} ${hasTeamsContext ? styles.teams : ''}`}>
         {
-          items.length===0 && <div>
+          !isReady && <>
             <Spinner label={strings.booksLoading} />
-          </div>
+          </>
         }
         {
-          items.length>0 && <>
+          isReady && <>
             <MarqueeSelection selection={this._selection}>
+              <TextField label={strings.filterByName} onChange={this._onChangeText} />
               <DetailsList
                 items={items}
                 columns={columns}
@@ -66,8 +76,15 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
                 onColumnHeaderClick={this._onColumnClick}
               />
             </MarqueeSelection>
-            <p style={{marginTop:'2em',textAlign:"center", fontStyle:'italic'}}>{selectionDetails}</p>          
           </>
+        }
+        {
+          isReady && items.length>0 &&
+            <p style={{marginTop:'2em',textAlign:"center", fontStyle:'italic'}}>{selectionDetails}</p>          
+        }
+        {
+          isReady && items.length===0 &&
+            <p style={{marginTop:'2em',textAlign:"center", fontStyle:'italic'}}>{strings.noData}</p>
         }
       </section>
     );
@@ -108,7 +125,14 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
       items: newItems,
     });
   }
+  private _onChangeText = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => {
+    //Aggiorno lo stato con la lista allItems filtrata
+    this.setState({
+      items: text ? this._allItems.filter(i => i.concatAll().toLowerCase().indexOf(text.toLowerCase()) > -1) : this._allItems,
+    });
+  };
 }
+
 
 function _copyAndSort<T>(items: T[], columnKey: string, isSortedDescending?: boolean): T[] {
   const key = columnKey as keyof T;

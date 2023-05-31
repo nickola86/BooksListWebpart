@@ -21,6 +21,9 @@ declare interface IBooksListWebPartStrings {
   noItemsSelected:string;
   oneItemSelected:string;
   itemsSelected:string;
+
+  filterByName:string;
+  noData:string;
 }
 
 declare module 'BooksListWebPartStrings' {
