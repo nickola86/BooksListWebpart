@@ -24,6 +24,7 @@ define([], function() {
     "itemsSelected": "libri selezionati",
 
     "filterByName": "Ricerca libera:",
-    "noData": "Nessun dato in lista, rimuovre i filtri."
+    "noData": "Nessun dato in lista, rimuovre i filtri.",
+    "hexModeLabel": "Ti piace soffrire? Prova la HEX mode per una lettura più avvincente!"
   }
 });

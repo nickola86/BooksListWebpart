@@ -8,8 +8,13 @@
   &.teams {
     font-family: $ms-font-family-fallbacks;
   }
+  .row{
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+  }
   .row:hover{
-    color:midnightblue;
+    color:var(--linkHovered);
+    background-color: #eaeaea;
   }
 }
 

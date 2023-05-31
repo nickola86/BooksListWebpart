@@ -24,6 +24,7 @@ declare interface IBooksListWebPartStrings {
 
   filterByName:string;
   noData:string;
+  hexModeLabel:string;
 }
 
 declare module 'BooksListWebPartStrings' {

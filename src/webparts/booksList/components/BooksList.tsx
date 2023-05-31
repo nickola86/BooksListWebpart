@@ -6,7 +6,8 @@ import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { DetailsList, IColumn, Selection } from '@fluentui/react/lib/DetailsList';
 import * as strings from 'BooksListWebPartStrings';
 import BooksService from '../services/BooksService';
-import { Spinner, TextField } from '@fluentui/react';
+import { Spinner, TextField, Toggle } from '@fluentui/react';
+import toHex from '../utils/HexUtils';
 
 export default class BooksList extends React.Component<IBooksListProps, IBooksList> {
 
@@ -32,6 +33,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
     this.state = {
       items: [],
       isReady:false,
+      isHexMode:false,
       columns: this._columns,
       announcedMessage:"",
       selectionDetails:this._getSelectionDetails()
@@ -56,7 +58,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
       hasTeamsContext
     } = this.props;
 
-    const { items, isReady, columns, selectionDetails } = this.state;
+    const { items, isReady, columns, selectionDetails,isHexMode } = this.state;
 
     return (
       <section className={`${styles.booksList} ${hasTeamsContext ? styles.teams : ''}`}>
@@ -67,6 +69,13 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
         }
         {
           isReady && <>
+            <Toggle
+              label={strings.hexModeLabel}
+              checked={isHexMode}
+              onChange={this._onChangeHexMode}
+              onText="Hex"
+              offText="Normal"
+            />
             <MarqueeSelection selection={this._selection}>
               <TextField label={strings.filterByName} onChange={this._onChangeText} />
               <DetailsList
@@ -131,6 +140,27 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
     this.setState({
       items: text ? this._allItems.filter(i => i.concatAll().toLowerCase().indexOf(text.toLowerCase()) > -1) : this._allItems,
     });
+  };
+
+  private _onChangeHexMode = (ev: React.MouseEvent<HTMLElement>, checked: boolean): void => {
+    this.setState({ isHexMode: checked });
+    if(checked){
+      const newitems: IBook[] = this._allItems.map(i=>{
+        return {
+          "titolo": toHex(i.titolo),
+          "autoreLibro": toHex(i.autoreLibro),
+          "annoPubblicazione": toHex(i.annoPubblicazione.toString()),
+          "pagineLibro": toHex(i.pagineLibro.toString())
+        }
+      }) 
+      this.setState({
+        items:newitems
+      })   
+    }else{
+      this.setState({
+        items:this._allItems
+      })  
+    }
   };
 }
 
