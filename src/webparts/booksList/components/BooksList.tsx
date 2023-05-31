@@ -17,10 +17,10 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
     super(props);
 
     this._columns = [
-      { key: 'column1', name: strings.name, fieldName: 'titolo', minWidth: 100, maxWidth: 200, isResizable: true },
-      { key: 'column2', name: strings.autoreLibro, fieldName: 'autoreLibro', minWidth: 80, maxWidth: 200, isResizable: true },
-      { key: 'column3', name: strings.annoPubblicazione, fieldName: 'annoPubblicazione', minWidth: 50, maxWidth: 100, isResizable: true },
-      { key: 'column4', name: strings.pagineLibro, fieldName: 'pagineLibro', minWidth: 150, maxWidth: 200, isResizable: true },
+      { key: 'column1', name: strings.name, fieldName: 'titolo', minWidth: 100, maxWidth: 200, isResizable: true, isSorted:false },
+      { key: 'column2', name: strings.autoreLibro, fieldName: 'autoreLibro', minWidth: 80, maxWidth: 200, isResizable: true, isSorted:false },
+      { key: 'column3', name: strings.annoPubblicazione, fieldName: 'annoPubblicazione', minWidth: 50, maxWidth: 100, isResizable: true, isSorted:false },
+      { key: 'column4', name: strings.pagineLibro, fieldName: 'pagineLibro', minWidth: 150, maxWidth: 200, isResizable: true, isSorted:false },
     ];
 
     //Inizializzo la selezione
@@ -30,6 +30,8 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
 
     this.state = {
       items: [],
+      columns: this._columns,
+      announcedMessage:"",
       selectionDetails:this._getSelectionDetails()
     };
   }
@@ -45,7 +47,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
       hasTeamsContext
     } = this.props;
 
-    const { items, selectionDetails } = this.state;
+    const { items, columns, selectionDetails } = this.state;
 
     return (
       <section className={`${styles.booksList} ${hasTeamsContext ? styles.teams : ''}`}>
@@ -59,8 +61,9 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
             <MarqueeSelection selection={this._selection}>
               <DetailsList
                 items={items}
-                columns={this._columns}
+                columns={columns}
                 selection={this._selection}
+                onColumnHeaderClick={this._onColumnClick}
               />
             </MarqueeSelection>
             <p style={{marginTop:'2em',textAlign:"center", fontStyle:'italic'}}>{selectionDetails}</p>          
@@ -81,4 +84,33 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
         return `${selectionCount} ${strings.itemsSelected}`;
     }
   }
+  private _onColumnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn): void => {
+    const { columns, items } = this.state;
+    const newColumns: IColumn[] = columns.slice();
+    const currColumn: IColumn = newColumns.filter(currCol => column.key === currCol.key)[0];
+    newColumns.forEach((newCol: IColumn) => {
+      if (newCol === currColumn) {
+        currColumn.isSortedDescending = !currColumn.isSortedDescending;
+        currColumn.isSorted = true;
+        this.setState({
+          announcedMessage: `${currColumn.name} is sorted ${
+            currColumn.isSortedDescending ? 'descending' : 'ascending'
+          }`,
+        });
+      } else {
+        newCol.isSorted = false;
+        newCol.isSortedDescending = true;
+      }
+    });
+    const newItems = _copyAndSort(items, currColumn.fieldName!, currColumn.isSortedDescending);
+    this.setState({
+      columns: newColumns,
+      items: newItems,
+    });
+  }
+}
+
+function _copyAndSort<T>(items: T[], columnKey: string, isSortedDescending?: boolean): T[] {
+  const key = columnKey as keyof T;
+  return items.slice(0).sort((a: T, b: T) => ((isSortedDescending ? a[key] < b[key] : a[key] > b[key]) ? 1 : -1));
 }

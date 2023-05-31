@@ -1,5 +1,9 @@
+import { IColumn } from "office-ui-fabric-react"
+
 export interface IBooksList {
-    "items": Array<IBook>,
+    "items": IBook[],
+    "columns": IColumn[],
+    "announcedMessage": string,
     "selectionDetails":string
 }
 export interface IBook{
