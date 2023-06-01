@@ -7,7 +7,8 @@ import { DetailsList, IColumn, Selection } from '@fluentui/react/lib/DetailsList
 import * as strings from 'BooksListWebPartStrings';
 import { Spinner, TextField, Toggle } from '@fluentui/react';
 import toHex from '../utils/HexUtils';
-import SPHelper from '../helpers/SPHelper';
+
+import booksService from '../services/BooksService';
 
 export default class BooksList extends React.Component<IBooksListProps, IBooksList> {
 
@@ -42,7 +43,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
 
   async componentDidMount(): Promise<void> {
     //Carico i libri
-    const books: IBook[] = await SPHelper.getAllBooks()
+    const books: IBook[] = await booksService.getAll()
     //Setto la lista dei libri nello stato
     this.setState({items:books,isReady:true})
     //Setto la lista dei libri nella property interna (usata dal filtro)

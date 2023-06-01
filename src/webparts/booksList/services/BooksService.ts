@@ -1,31 +1,21 @@
+import SPContextHelper from '../helpers/SPContextHelper';
 import { IBook } from '../types/IBooksList';
-import { spfi, SPFI, SPFx as spSPFx } from "@pnp/sp";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-import "@pnp/sp/webs";
-import "@pnp/sp/lists";
-import "@pnp/sp/items";
 
 const LIST_NAME = "BooksList"
 
 export interface IBooksService {
-    fetch(): Promise<IBook[]>;
+    getAll(): Promise<IBook[]>;
 }
 
-export class BooksService implements IBooksService {
-        
-    private _sp: SPFI;
-
-    constructor(webPartContext: WebPartContext){
+export class BooksService extends SPContextHelper implements IBooksService { 
+    public getAll(): Promise<IBook[]> {
         try{
-            console.log("webPartContext", webPartContext)
-            this._sp = spfi().using(spSPFx(webPartContext));
-            console.log("this._sp", this._sp)
+            return SPContextHelper.getContext().web.lists.getByTitle(LIST_NAME).items()
         }catch(e){
             console.error(e)
         }
     }
-
-    public fetch(): Promise<IBook[]> {
-        return this._sp.web.lists.getByTitle(LIST_NAME).items()
-    }
 }
+
+const booksService = new BooksService()
+export default booksService

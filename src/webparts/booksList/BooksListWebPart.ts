@@ -11,7 +11,7 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import * as strings from 'BooksListWebPartStrings';
 import BooksList from './components/BooksList';
 import { IBooksListProps } from './components/IBooksListProps';
-import SPHelper from './helpers/SPHelper';
+import SPHelper from './helpers/SPContextHelper';
 
 export interface IBooksListWebPartProps {
   description: string;

@@ -1,4 +1,4 @@
-enum Mappings {
+const enum Mappings {
     spListBooksList="BooksList",
     spFieldTitolo="titolo",
     spFieldAutoreLibro="autoreLibro",
