@@ -11,6 +11,7 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import * as strings from 'BooksListWebPartStrings';
 import BooksList from './components/BooksList';
 import { IBooksListProps } from './components/IBooksListProps';
+import SPHelper from './helpers/SPHelper';
 
 export interface IBooksListWebPartProps {
   description: string;
@@ -37,6 +38,7 @@ export default class BooksListWebPart extends BaseClientSideWebPart<IBooksListWe
   }
 
   protected onInit(): Promise<void> {
+    SPHelper.init(this.context);
     return this._getEnvironmentMessage().then(message => {
       this._environmentMessage = message;
     });

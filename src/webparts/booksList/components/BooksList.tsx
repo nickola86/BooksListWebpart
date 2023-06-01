@@ -5,9 +5,9 @@ import { IBook, IBooksList } from '../types/IBooksList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { DetailsList, IColumn, Selection } from '@fluentui/react/lib/DetailsList';
 import * as strings from 'BooksListWebPartStrings';
-import BooksService from '../services/BooksService';
 import { Spinner, TextField, Toggle } from '@fluentui/react';
 import toHex from '../utils/HexUtils';
+import SPHelper from '../helpers/SPHelper';
 
 export default class BooksList extends React.Component<IBooksListProps, IBooksList> {
 
@@ -42,7 +42,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
 
   async componentDidMount(): Promise<void> {
     //Carico i libri
-    const books: IBook[] = await BooksService.fetch();
+    const books: IBook[] = await SPHelper.getAll()
     //Setto la lista dei libri nello stato
     this.setState({items:books,isReady:true})
     //Setto la lista dei libri nella property interna (usata dal filtro)
@@ -99,6 +99,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
       </section>
     );
   }
+
   private _getSelectionDetails(): string {
     const selectionCount = this._selection.getSelectedCount();
 
@@ -111,6 +112,9 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
         return `${selectionCount} ${strings.itemsSelected}`;
     }
   }
+
+  /*Section: Event Handlers - Begin*/
+
   private _onColumnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn): void => {
     const { columns, items } = this.state;
     const newColumns: IColumn[] = columns.slice();
@@ -135,6 +139,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
       items: newItems,
     });
   }
+
   private _onChangeText = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => {
     //Aggiorno lo stato con la lista allItems filtrata
     this.setState({
@@ -162,6 +167,9 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
       })  
     }
   };
+
+    /*Section: Event Handlers - End*/
+
 }
 
 
