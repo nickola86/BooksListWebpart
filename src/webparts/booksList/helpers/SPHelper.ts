@@ -4,13 +4,15 @@ import { SPFI, SPFx, spfi } from "@pnp/sp";
 import "@pnp/sp/webs";
 import "@pnp/sp/lists";
 import "@pnp/sp/items";
-import {Mappings} from "./Mappings";
 import { IBook } from "../types/IBooksList";
+
+import m from "./Mappings";
+const {spFieldAnnoPubblicazione,spFieldTitolo,spFieldPagineLibro,spFieldAutoreLibro, spListBooksList} = m;
 
 export default class SPHelper {
     private static _sp: SPFI;
     
-    public static init(spfxContext: WebPartContext){
+    public static init(spfxContext: WebPartContext): void{
         try{
             if(!!spfxContext) {
                 SPHelper._sp = spfi().using(SPFx(spfxContext))
@@ -20,15 +22,15 @@ export default class SPHelper {
         }
     }
 
-    public static getAll = async ():Promise<IBook[]> => {
+    public static getAllBooks = async ():Promise<IBook[]> => {
         try{
-            const result:any[] = await SPHelper._sp.web.lists.getByTitle(Mappings.spListBooksList).items()
-            return result.map<IBook>((i:any)=>{
+            const result = await SPHelper._sp.web.lists.getByTitle(spListBooksList).items()
+            return result.map<IBook>(i=>{
                 return {
-                    titolo: i[Mappings.spFieldTitolo],
-                    annoPubblicazione: i[Mappings.spFieldAnnoPubblicazione],
-                    pagineLibro: i[Mappings.spFieldPagineLibro],
-                    autoreLibro: i[Mappings.spFieldAutoreLibro]
+                    titolo: i[spFieldTitolo],
+                    annoPubblicazione: i[spFieldAnnoPubblicazione],
+                    pagineLibro: i[spFieldPagineLibro],
+                    autoreLibro: i[spFieldAutoreLibro]
                 }
             })
         }catch(e){

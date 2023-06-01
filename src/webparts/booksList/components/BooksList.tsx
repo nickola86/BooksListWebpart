@@ -42,7 +42,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
 
   async componentDidMount(): Promise<void> {
     //Carico i libri
-    const books: IBook[] = await SPHelper.getAll()
+    const books: IBook[] = await SPHelper.getAllBooks()
     //Setto la lista dei libri nello stato
     this.setState({items:books,isReady:true})
     //Setto la lista dei libri nella property interna (usata dal filtro)
@@ -84,6 +84,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
                 selection={this._selection}
                 onColumnHeaderClick={this._onColumnClick}
                 onRenderRow={(props, defaultRender) => defaultRender({...props, className: styles.row})}    
+                /*onRenderItemColumn={...}*/
               />
             </MarqueeSelection>
           </>
