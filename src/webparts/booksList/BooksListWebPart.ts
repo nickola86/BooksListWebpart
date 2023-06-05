@@ -13,6 +13,8 @@ import BooksList from './components/BooksList';
 import { IBooksListProps } from './components/IBooksListProps';
 import SPHelper from './helpers/SPContextHelper';
 
+import { initializeIcons } from '@fluentui/font-icons-mdl2';
+
 export interface IBooksListWebPartProps {
   description: string;
 }
@@ -23,6 +25,7 @@ export default class BooksListWebPart extends BaseClientSideWebPart<IBooksListWe
   private _environmentMessage: string = '';
 
   public render(): void {
+    
     const element: React.ReactElement<IBooksListProps> = React.createElement(
       BooksList,
       {
@@ -42,6 +45,7 @@ export default class BooksListWebPart extends BaseClientSideWebPart<IBooksListWe
     return this._getEnvironmentMessage().then(message => {
       this._environmentMessage = message;
     });
+    initializeIcons();
   }
 
 

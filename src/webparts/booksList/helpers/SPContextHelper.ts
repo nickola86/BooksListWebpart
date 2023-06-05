@@ -4,6 +4,7 @@ import { SPFI, SPFx, spfi } from "@pnp/sp";
 import "@pnp/sp/webs";
 import "@pnp/sp/lists";
 import "@pnp/sp/items";
+import "@pnp/sp/recycle-bin";
 
 export default class SPContextHelper {
     

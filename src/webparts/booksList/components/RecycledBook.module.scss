@@ -1,0 +1,15 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.recycledBook {
+    border: 1px solid cyan;
+    background-color: lightcyan;
+    padding: 5px;
+    margin-right: 10px;
+    display: inline-block;
+    .cancelIcon{
+        height:16px;
+        width:16px;
+        color: aqua;
+        cursor: pointer;
+    }
+}

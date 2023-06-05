@@ -24,7 +24,17 @@ define([], function() {
     "itemsSelected": "libri selezionati",
 
     "filterByName": "Ricerca libera:",
-    "noData": "Nessun dato in lista, rimuovre i filtri.",
-    "hexModeLabel": "Ti piace soffrire? Prova la HEX mode per una lettura più avvincente!"
+    "noData": "Nessun dato in lista, rimuovre i filtri o aggiungere nuovi elementi.",
+    "hexModeLabel": "Ti piace soffrire? Prova la HEX mode per una lettura più avvincente!",
+    "addRow":"Nuova riga",
+    "deleteRow":"Elimina riga",
+
+    "booksInTheRecycleBin": "Libri nel cestino",
+
+    "save": "Salva",
+    "close": "Chiudi",
+
+    "newBook": "Nuovo libro",
+    "editBook": "Modifica libro"
   }
 });

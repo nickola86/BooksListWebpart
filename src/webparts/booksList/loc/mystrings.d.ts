@@ -1,4 +1,9 @@
 declare interface IBooksListWebPartStrings {
+  newBook: any;
+  editBook: any;
+  close: string;
+  save: string;
+  booksInTheRecycleBin: any;
   PropertyPaneDescription: string;
   BasicGroupName: string;
   DescriptionFieldLabel: string;
@@ -25,6 +30,9 @@ declare interface IBooksListWebPartStrings {
   filterByName:string;
   noData:string;
   hexModeLabel:string;
+  actions: string;
+  deleteRow: string;
+  addRow: string;
 }
 
 declare module 'BooksListWebPartStrings' {
