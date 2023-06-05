@@ -1,7 +1,7 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 
 .recycledBook {
-    border: 1px solid cyan;
+    border: 1px solid lightskyblue;
     background-color: lightcyan;
     padding: 5px;
     margin-right: 10px;
@@ -9,7 +9,9 @@
     .cancelIcon{
         height:16px;
         width:16px;
-        color: aqua;
+        top:4px;
+        margin-left:8px;
+        color: lightskyblue;
         cursor: pointer;
     }
 }

@@ -98,7 +98,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
         }
         {
           !!recycledItems && recycledItems.length>0 && <div style={{marginTop:'1em'}}>
-            <Label>{strings.booksInTheRecycleBin}</Label>
+            <Label>{strings.booksInTheRecycleBin} ({recycledItems.length})</Label>
             {
               recycledItems.map(i=><RecycledBook id={i} onRestoreClick={()=>{this._onRestoreFromRecycle(i)}}/>)
             }
