@@ -9,8 +9,7 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import * as strings from 'BooksListWebPartStrings';
-import BooksList from './components/BooksList';
-import { IBooksListProps } from './components/IBooksListProps';
+import BooksList, { IBooksListProps } from './components/BooksList';
 import SPHelper from './helpers/SPContextHelper';
 
 import { initializeIcons } from '@fluentui/font-icons-mdl2';

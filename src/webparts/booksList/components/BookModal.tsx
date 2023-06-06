@@ -12,7 +12,7 @@ export interface IBookProps {
   isEditMode:boolean;
   onCloseCallback?:(book:IBook,save:boolean)=>void;
 }
-export const BookModal = (props:IBookProps) => {
+export const BookModal = (props:IBookProps): JSX.Element => {
   const {book} = props
 
   const [titolo,setTitolo] = useState('')
@@ -40,10 +40,10 @@ export const BookModal = (props:IBookProps) => {
   >
     <div className={styles.bookModal}>
       <h1>{props.isEditMode ? strings.editBook : strings.newBook}</h1>
-      <TextField label={strings.name} value={titolo} onChange={(e,v)=>setTitolo(v)}></TextField>
-      <TextField label={strings.autoreLibro}value={autoreLibro} onChange={(e,v)=>setAutoreLibro(v)}></TextField>
-      <TextField label={strings.pagineLibro} value={pagineLibro} onChange={(e,v)=>setPagineLibro(v)}></TextField>
-      <TextField label={strings.annoPubblicazione} value={annoPubblicazione} onChange={(e,v)=>setAnnoPubblicazione(v)}></TextField>
+      <TextField label={strings.name} value={titolo} onChange={(e,v)=>setTitolo(v)}/>
+      <TextField label={strings.autoreLibro}value={autoreLibro} onChange={(e,v)=>setAutoreLibro(v)}/>
+      <TextField label={strings.pagineLibro} value={pagineLibro} onChange={(e,v)=>setPagineLibro(v)}/>
+      <TextField label={strings.annoPubblicazione} value={annoPubblicazione} onChange={(e,v)=>setAnnoPubblicazione(v)}/>
       <div className={styles.buttons}>
         <DefaultButton onClick={()=>{props.onCloseCallback(_book,false)}}>{strings.close}</DefaultButton>
         <DefaultButton primary onClick={()=>{props.onCloseCallback(_book,true)}}>{strings.save}</DefaultButton>

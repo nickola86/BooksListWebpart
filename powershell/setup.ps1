@@ -15,7 +15,7 @@ try{
 
 Add-PnPField -DisplayName "Nome del libro" -InternalName "titolo" -Type Text 
 Add-PnPField -DisplayName "Autore" -InternalName "autoreLibro" -Type Text 
-Add-PnPField -DisplayName "Anno" -InternalName "annoPubblicazione" -Type Text 
+Add-PnPField -DisplayName "Anno" -InternalName "annoPubblicazione" -Type Number 
 Add-PnPField -DisplayName "Numero di pagine" -InternalName "pagineLibro" -Type Number
 
 Add-PnPContentType -Name "IBook" -Description "Custom Content Types" -Group "Custom Content Types" -ParentContentType (Get-PnPContentType Item)

@@ -8,7 +8,7 @@ interface IRecycledBookProps{
     onRestoreClick:()=>void
 }
 
-export const RecycledBook = (props:IRecycledBookProps) => {
+export const RecycledBook = (props:IRecycledBookProps): JSX.Element => {
     return (<p className={styles.recycledBook}>
         {props.value}
         <IconButton

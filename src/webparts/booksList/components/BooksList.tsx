@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styles from './BooksList.module.scss';
-import { IBooksListProps } from './IBooksListProps';
 import { IBook, IBookRecycled, IBooksList } from '../types/IBooksList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { CheckboxVisibility, DetailsList, IColumn, Selection } from '@fluentui/react/lib/DetailsList';
@@ -12,6 +11,15 @@ import recycleBinService from '../services/RecycleBinService';
 
 import { RecycledBook } from './RecycledBook';
 import { BookModal } from './BookModal';
+
+
+export interface IBooksListProps {
+  description: string;
+  isDarkTheme: boolean;
+  environmentMessage: string;
+  hasTeamsContext: boolean;
+  userDisplayName: string;
+}
 
 export default class BooksList extends React.Component<IBooksListProps, IBooksList> {
 
@@ -59,6 +67,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
     } = this.props;
 
     const { items, isReady, columns, selectionDetails,recycledItems,isBookModalOpen,currentBook } = this.state;
+    const commandBarStyles: Partial<ICommandBarStyles> = { root: { marginLeft:'0px', paddingLeft:'0px', marginBottom: '10px' } };
 
     return (
       <section className={`${styles.booksList} ${hasTeamsContext ? styles.teams : ''}`}>
@@ -102,7 +111,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
           !!recycledItems && recycledItems.length>0 && <div style={{marginTop:'1em'}}>
             <Label>{strings.booksInTheRecycleBin} ({recycledItems.length})</Label>
             {
-              recycledItems.map(i=><RecycledBook guid={i.guid} value={i.value} onRestoreClick={()=>{this._onRestoreFromRecycle(i.guid)}}/>)
+              recycledItems.map(i=><RecycledBook key={i.guid} guid={i.guid} value={i.value} onRestoreClick={async ()=>{await this._onRestoreFromRecycle(i.guid)}}/>)
             }
             <DefaultButton style={{display:'block'}} onClick={this._onCleanRecycle}>{strings.cleanRecycleBin}</DefaultButton>
           </div>
@@ -111,14 +120,14 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
     );
   }
 
-  private _onCleanRecycle = async() => {
+  private _onCleanRecycle = async():Promise<void> => {
     await recycleBinService.cleanRecycleBin()
-    this._reloadData()
+    await this._reloadData()
   }
   //private onCloseBookModalHandler = (newBook:IBook,save:boolean) => {
   //  console.log("Modale chiusa! Save:", save)
   //}
-private async _reloadData() {
+private _reloadData = async (): Promise<void> => {
   const data = await Promise.all([
     booksService.getAll(), //data[0]
     recycleBinService.getRecycledItems()//data[1]
@@ -159,7 +168,7 @@ private async _reloadData() {
     this.setState({isBookModalOpen:true})
     return;
   }
-  private _onBookModalClose = async (book:IBook,save:boolean) => {
+  private _onBookModalClose = async (book:IBook,save:boolean):Promise<void> => {
     if(save && !!book.id) {
       //Se l'elemento ha già un ID, lo sto aggiornando
       await booksService.updateItem(book)
@@ -168,27 +177,30 @@ private async _reloadData() {
       await booksService.createItem(book)
     }
     //Ricarico i dati in pagina
-    this._reloadData()
+    await this._reloadData()
   }
 
-  private _onDeleteRow = (ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
+  private _onDeleteRow = (): void => {
     if (this._selection.getSelectedCount() > 0) {
       //Cancello tutti i libri selezionati
-      Promise.all(
-        this._selection.getSelection().map((book:IBook)=>{
+      try{
+        Promise.all(this._selection.getSelection().map((book:IBook)=>{
           return booksService.deleteItem(book.id)
+        })).then(async ()=>{
+          //ricarico i dati della pagina
+          await this._reloadData()
+        }).catch((e)=>{
+          console.error(e)
         })
-      ).then(()=>{
-        //ricarico i dati della pagina
-        this._reloadData()
-      })
-      return
+      }catch(e){
+        console.error(e)
+      }
     }
   }
 
-  private _onRestoreFromRecycle = async (id:string) => {
+  private _onRestoreFromRecycle = async (id:string): Promise<void> => {
     await recycleBinService.restoreFromRecycle(id)
-    this._reloadData()
+    await this._reloadData()
   }
 
   private _getSelectionDetails(): string {
@@ -203,8 +215,8 @@ private async _reloadData() {
         return `${selectionCount} ${strings.itemsSelected}`;
     }
   }
-  private _onRenderItemColumn = (item: any, index: any, column: any) => {
-    let fieldContent = item[column.fieldName];
+  private _onRenderItemColumn = (item: any, index: number, column: IColumn): JSX.Element => {
+    const fieldContent = item[column.fieldName];
     switch (column.key) {
         case 'actions':
             return  <FontIcon aria-label="Edit" iconName="Edit" style={{cursor:'pointer'}} onClick={()=>{
@@ -256,6 +268,3 @@ function _copyAndSort<T>(items: T[], columnKey: string, isSortedDescending?: boo
   const key = columnKey as keyof T;
   return items.slice(0).sort((a: T, b: T) => ((isSortedDescending ? a[key] < b[key] : a[key] > b[key]) ? 1 : -1));
 }
-
-const commandBarStyles: Partial<ICommandBarStyles> = { root: { marginLeft:'0px', paddingLeft:'0px', marginBottom: '10px' } };
-

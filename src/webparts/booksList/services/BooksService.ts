@@ -6,7 +6,7 @@ import { IItemAddResult, IItemUpdateResult } from '@pnp/sp/items';
 
 export interface IBooksService {
     getAll(): Promise<IBook[]>;
-    deleteItem(id:number): Promise<any>;
+    deleteItem(id:number): Promise<void>;
     createItem(book:IBook): Promise<IBook>;
     updateItem(book:IBook): Promise<IBook>;
 }
@@ -39,7 +39,7 @@ export class BooksService extends SPContextHelper implements IBooksService {
         }
     }
     
-    public createItem = async(book:IBook): Promise<any> => {
+    public createItem = async(book:IBook): Promise<IBook> => {
         try{
             const b = {
                 [m.spFieldTitolo]: book.titolo,
@@ -49,13 +49,13 @@ export class BooksService extends SPContextHelper implements IBooksService {
                 [m.spFieldAsString] : book.asString
             }
             const result:IItemAddResult = await SPContextHelper.getContext().web.lists.getByTitle(m.spListBooksList).items.add(b)
-            return result.item
+            return result.item as unknown as IBook
         }catch(e){
             console.error(e)
         }
     }
     
-    public updateItem = async(book:IBook): Promise<any> => {
+    public updateItem = async(book:IBook): Promise<IBook> => {
         try{
             const result:IItemUpdateResult = await SPContextHelper.getContext().web.lists.getByTitle(m.spListBooksList).items.getById(book.id).update({
                 [m.spFieldTitolo]: book.titolo,
@@ -64,7 +64,7 @@ export class BooksService extends SPContextHelper implements IBooksService {
                 [m.spFieldAnnoPubblicazione] : Number(book.annoPubblicazione),
                 [m.spFieldAsString] : book.asString
             })
-            return result.item
+            return result.item as unknown as IBook
         }catch(e){
             console.error(e)
         }

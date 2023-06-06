@@ -3,8 +3,8 @@ import { IBookRecycled } from '../types/IBooksList';
 
 export interface IRecycleBinService {
     getRecycledItems(): Promise<IBookRecycled[]>;
-    restoreFromRecycle(id:string): Promise<any>;
-    cleanRecycleBin(): Promise<any>;
+    restoreFromRecycle(id:string): Promise<void>;
+    cleanRecycleBin(): Promise<void>;
 }
 
 export class BooksService extends SPContextHelper implements IRecycleBinService {
@@ -23,7 +23,7 @@ export class BooksService extends SPContextHelper implements IRecycleBinService 
         }
     } 
     
-    public restoreFromRecycle = async(id: string): Promise<any> => {
+    public restoreFromRecycle = async(id: string): Promise<void> => {
         try{
             const rbItem = await SPContextHelper.getContext().web.recycleBin.getById(id);
             await rbItem.restore()
@@ -31,7 +31,7 @@ export class BooksService extends SPContextHelper implements IRecycleBinService 
             console.error(e)
         }
     }
-    public cleanRecycleBin = async(): Promise<any> => {
+    public cleanRecycleBin = async(): Promise<void> => {
         try{
             await SPContextHelper.getContext().web.recycleBin.deleteAll();
         }catch(e){
