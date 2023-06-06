@@ -160,10 +160,10 @@ private async _reloadData() {
     return;
   }
   private _onBookModalClose = async (book:IBook,save:boolean) => {
-    if(save && book.id !== undefined) {
+    if(save && !!book.id) {
       //Se l'elemento ha già un ID, lo sto aggiornando
       await booksService.updateItem(book)
-    }else if(save && book.id === undefined){
+    }else if(save && !book.id){
       //Se l'elemento non ha già un ID, lo sto creando
       await booksService.createItem(book)
     }

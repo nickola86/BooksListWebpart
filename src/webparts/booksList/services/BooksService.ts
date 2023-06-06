@@ -3,7 +3,6 @@ import { IBook } from '../types/IBooksList';
 
 import m from '../helpers/Mappings';
 import { IItemAddResult, IItemUpdateResult } from '@pnp/sp/items';
-import { toNumber } from 'lodash';
 
 export interface IBooksService {
     getAll(): Promise<IBook[]>;
@@ -21,9 +20,9 @@ export class BooksService extends SPContextHelper implements IBooksService {
                 return {
                     id: i[m.spFieldId],
                     titolo: i[m.spFieldTitolo],
-                    annoPubblicazione: i[m.spFieldAnnoPubblicazione],
-                    pagineLibro: i[m.spFieldPagineLibro],
                     autoreLibro: i[m.spFieldAutoreLibro],
+                    annoPubblicazione: Number(i[m.spFieldAnnoPubblicazione]),
+                    pagineLibro: Number(i[m.spFieldPagineLibro]),
                     asString:i[m.spFieldAsString]
                 }
             })
@@ -45,8 +44,8 @@ export class BooksService extends SPContextHelper implements IBooksService {
             const b = {
                 [m.spFieldTitolo]: book.titolo,
                 [m.spFieldAutoreLibro] : book.autoreLibro,
-                [m.spFieldPagineLibro] : toNumber(book.pagineLibro),
-                [m.spFieldAnnoPubblicazione] : toNumber(book.annoPubblicazione),
+                [m.spFieldPagineLibro] : Number(book.pagineLibro),
+                [m.spFieldAnnoPubblicazione] : Number(book.annoPubblicazione),
                 [m.spFieldAsString] : book.asString
             }
             const result:IItemAddResult = await SPContextHelper.getContext().web.lists.getByTitle(m.spListBooksList).items.add(b)
@@ -61,8 +60,8 @@ export class BooksService extends SPContextHelper implements IBooksService {
             const result:IItemUpdateResult = await SPContextHelper.getContext().web.lists.getByTitle(m.spListBooksList).items.getById(book.id).update({
                 [m.spFieldTitolo]: book.titolo,
                 [m.spFieldAutoreLibro] : book.autoreLibro,
-                [m.spFieldPagineLibro] : toNumber(book.pagineLibro),
-                [m.spFieldAnnoPubblicazione] : toNumber(book.annoPubblicazione),
+                [m.spFieldPagineLibro] : Number(book.pagineLibro),
+                [m.spFieldAnnoPubblicazione] : Number(book.annoPubblicazione),
                 [m.spFieldAsString] : book.asString
             })
             return result.item
