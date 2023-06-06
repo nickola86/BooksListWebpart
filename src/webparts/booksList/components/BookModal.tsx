@@ -20,6 +20,7 @@ export const BookModal = (props:IBookProps) => {
   const [pagineLibro,setPagineLibro] = useState(undefined)
   const [annoPubblicazione,setAnnoPubblicazione] = useState(undefined)
   const [id,setId] = useState(undefined)
+  const [asString, setAsString] = useState(undefined)
   
   useEffect(()=>{
     setTitolo(book?.titolo || "")
@@ -27,9 +28,10 @@ export const BookModal = (props:IBookProps) => {
     setPagineLibro(book?.pagineLibro || "")
     setAnnoPubblicazione(book?.annoPubblicazione || "")
     setId(book?.id || null)
+    setAsString(`${titolo} - ${autoreLibro} (pagine: ${pagineLibro}, anno:${annoPubblicazione})`)
   },[book])
 
-  const _book: IBook = {titolo,autoreLibro,pagineLibro,annoPubblicazione,id}
+  const _book: IBook = {titolo,autoreLibro,pagineLibro,annoPubblicazione,id,asString:`${titolo} - ${autoreLibro} (pagine: ${pagineLibro}, anno:${annoPubblicazione})` || asString}
 
   return (<Modal
     isOpen={props.isModalOpen}

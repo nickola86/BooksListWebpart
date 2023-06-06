@@ -35,6 +35,8 @@ define([], function() {
     "close": "Chiudi",
 
     "newBook": "Nuovo libro",
-    "editBook": "Modifica libro"
+    "editBook": "Modifica libro",
+
+    "cleanRecycleBin": "Svuota cestino"
   }
 });

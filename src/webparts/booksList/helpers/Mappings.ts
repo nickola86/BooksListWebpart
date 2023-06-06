@@ -4,6 +4,7 @@ const enum Mappings {
     spFieldAutoreLibro = "autoreLibro",
     spFieldAnnoPubblicazione = "annoPubblicazione",
     spFieldPagineLibro = "pagineLibro",
-    spFieldId = "Id"
+    spFieldId = "Id",
+    spFieldAsString = "Title"
 }
 export default Mappings

@@ -1,13 +1,15 @@
 import * as React from 'react';
 import styles from './BooksList.module.scss';
 import { IBooksListProps } from './IBooksListProps';
-import { IBook, IBooksList } from '../types/IBooksList';
+import { IBook, IBookRecycled, IBooksList } from '../types/IBooksList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { CheckboxVisibility, DetailsList, IColumn, Selection } from '@fluentui/react/lib/DetailsList';
 import * as strings from 'BooksListWebPartStrings';
-import { CommandBar, FontIcon, ICommandBarItemProps, ICommandBarStyles, IContextualMenuItem, Label, Spinner, TextField } from '@fluentui/react';
+import { CommandBar, DefaultButton, FontIcon, ICommandBarItemProps, ICommandBarStyles, IContextualMenuItem, Label, Spinner, TextField } from '@fluentui/react';
 
 import booksService from '../services/BooksService';
+import recycleBinService from '../services/RecycleBinService';
+
 import { RecycledBook } from './RecycledBook';
 import { BookModal } from './BookModal';
 
@@ -100,12 +102,18 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
           !!recycledItems && recycledItems.length>0 && <div style={{marginTop:'1em'}}>
             <Label>{strings.booksInTheRecycleBin} ({recycledItems.length})</Label>
             {
-              recycledItems.map(i=><RecycledBook id={i} onRestoreClick={()=>{this._onRestoreFromRecycle(i)}}/>)
+              recycledItems.map(i=><RecycledBook guid={i.guid} value={i.value} onRestoreClick={()=>{this._onRestoreFromRecycle(i.guid)}}/>)
             }
+            <DefaultButton style={{display:'block'}} onClick={this._onCleanRecycle}>{strings.cleanRecycleBin}</DefaultButton>
           </div>
         }
       </section>
     );
+  }
+
+  private _onCleanRecycle = async() => {
+    await recycleBinService.cleanRecycleBin()
+    this._reloadData()
   }
   //private onCloseBookModalHandler = (newBook:IBook,save:boolean) => {
   //  console.log("Modale chiusa! Save:", save)
@@ -113,14 +121,14 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
 private async _reloadData() {
   const data = await Promise.all([
     booksService.getAll(), //data[0]
-    booksService.getRecycledItems()//data[1]
+    recycleBinService.getRecycledItems()//data[1]
   ])
   //Carico i libri
   const books = data[0] as IBook[]
   //Carico i libri nel cestino
-  const recycled = data[1] as string[]
+  const recycled = data[1] as IBookRecycled[]
   //Setto la lista dei libri nello stato
-  this.setState({items:books,isReady:true,recycledItems:recycled, currentBook:null, isBookModalOpen:false})
+  this.setState({items:books,isReady:true, recycledItems:recycled, currentBook:null, isBookModalOpen:false})
   //Setto la lista dei libri nella property interna (usata dal filtro)
   this._allItems = books;
   //Implemento un metodo custom "concatAll" che restituisce la concatenazione di tutte le properties interne di IBook
@@ -179,7 +187,7 @@ private async _reloadData() {
   }
 
   private _onRestoreFromRecycle = async (id:string) => {
-    await booksService.restoreFromRecycle(id)
+    await recycleBinService.restoreFromRecycle(id)
     this._reloadData()
   }
 

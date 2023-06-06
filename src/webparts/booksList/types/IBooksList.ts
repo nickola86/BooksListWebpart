@@ -7,16 +7,20 @@ export interface IBooksList {
     selectionDetails:string,
     isReady: boolean,
     isHexMode:boolean,
-    recycledItems:string[],
+    recycledItems:IBookRecycled[],
     isBookModalOpen:boolean,
     currentBook?:IBook
 }
 export interface IBook extends IObjectWithKey{
     id?: number,
+    asString?: string
     titolo: string,
     autoreLibro: string,
-    annoPubblicazione: number | string,
-    pagineLibro: number | string,
+    annoPubblicazione: number,
+    pagineLibro: number,
     concatAll?: () => string,
-    toString: () => string
+}
+export interface IBookRecycled{
+    guid?: string,
+    value?: string
 }

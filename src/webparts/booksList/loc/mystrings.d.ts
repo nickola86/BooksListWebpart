@@ -1,4 +1,5 @@
 declare interface IBooksListWebPartStrings {
+  cleanRecycleBin: string | number | readonly string[];
   newBook: any;
   editBook: any;
   close: string;

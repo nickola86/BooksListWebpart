@@ -3,14 +3,13 @@ import { IBook } from '../types/IBooksList';
 
 import m from '../helpers/Mappings';
 import { IItemAddResult, IItemUpdateResult } from '@pnp/sp/items';
+import { toNumber } from 'lodash';
 
 export interface IBooksService {
     getAll(): Promise<IBook[]>;
     deleteItem(id:number): Promise<any>;
-    getRecycledItems(): Promise<string[]>;
     createItem(book:IBook): Promise<IBook>;
     updateItem(book:IBook): Promise<IBook>;
-    restoreFromRecycle(id:string): Promise<any>;
 }
 
 export class BooksService extends SPContextHelper implements IBooksService {
@@ -24,7 +23,8 @@ export class BooksService extends SPContextHelper implements IBooksService {
                     titolo: i[m.spFieldTitolo],
                     annoPubblicazione: i[m.spFieldAnnoPubblicazione],
                     pagineLibro: i[m.spFieldPagineLibro],
-                    autoreLibro: i[m.spFieldAutoreLibro]
+                    autoreLibro: i[m.spFieldAutoreLibro],
+                    asString:i[m.spFieldAsString]
                 }
             })
         }catch(e){
@@ -40,17 +40,16 @@ export class BooksService extends SPContextHelper implements IBooksService {
         }
     }
     
-    public getRecycledItems = async ():Promise<string[]> => {
-        try{
-            return (await SPContextHelper.getContext().web.recycleBin()).map(r=>r.Id)
-        }catch(e){
-            console.error(e)
-        }
-    } 
-    
     public createItem = async(book:IBook): Promise<any> => {
         try{
-            const result:IItemAddResult = await SPContextHelper.getContext().web.lists.getByTitle(m.spListBooksList).items.add(book)
+            const b = {
+                [m.spFieldTitolo]: book.titolo,
+                [m.spFieldAutoreLibro] : book.autoreLibro,
+                [m.spFieldPagineLibro] : toNumber(book.pagineLibro),
+                [m.spFieldAnnoPubblicazione] : toNumber(book.annoPubblicazione),
+                [m.spFieldAsString] : book.asString
+            }
+            const result:IItemAddResult = await SPContextHelper.getContext().web.lists.getByTitle(m.spListBooksList).items.add(b)
             return result.item
         }catch(e){
             console.error(e)
@@ -62,22 +61,16 @@ export class BooksService extends SPContextHelper implements IBooksService {
             const result:IItemUpdateResult = await SPContextHelper.getContext().web.lists.getByTitle(m.spListBooksList).items.getById(book.id).update({
                 [m.spFieldTitolo]: book.titolo,
                 [m.spFieldAutoreLibro] : book.autoreLibro,
-                [m.spFieldPagineLibro] : book.pagineLibro,
-                [m.spFieldAnnoPubblicazione] : book.annoPubblicazione
+                [m.spFieldPagineLibro] : toNumber(book.pagineLibro),
+                [m.spFieldAnnoPubblicazione] : toNumber(book.annoPubblicazione),
+                [m.spFieldAsString] : book.asString
             })
             return result.item
         }catch(e){
             console.error(e)
         }
     }
-    public restoreFromRecycle = async(id: string): Promise<any> => {
-        try{
-            const rbItem = await SPContextHelper.getContext().web.recycleBin.getById(id);
-            await rbItem.restore()
-        }catch(e){
-            console.error(e)
-        }
-    }
+    
 }
 
 const booksService = new BooksService()
