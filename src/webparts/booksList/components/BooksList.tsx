@@ -11,6 +11,7 @@ import recycleBinService from '../services/RecycleBinService';
 
 import { RecycledBook } from './RecycledBook';
 import { BookModal } from './BookModal';
+import { Clock } from './Clock';
 
 
 export interface IBooksListProps {
@@ -71,6 +72,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
 
     return (
       <section className={`${styles.booksList} ${hasTeamsContext ? styles.teams : ''}`}>
+        <Clock></Clock>
         {
           !isReady && <>
             <Spinner label={strings.booksLoading} />

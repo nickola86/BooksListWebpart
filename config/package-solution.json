@@ -30,7 +30,13 @@
         "title": "list-with-fluent-ui Feature",
         "description": "The feature that activates elements of the list-with-fluent-ui solution.",
         "id": "7bd6d176-8fd4-428b-aa6c-5d02b6685e0f",
-        "version": "1.0.0.0"
+        "version": "1.0.0.0",
+        "assets": {
+          "elementManifests": [
+            "elements.xml",
+            "ClientSideInstance.xml"
+          ]
+        }
       }
     ]
   },

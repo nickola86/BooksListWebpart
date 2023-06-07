@@ -2,5 +2,31 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/spfx-serve.schema.json",
   "port": 4321,
   "https": true,
-  "initialPage": "https://7mcbww.sharepoint.com/sites/dev/SitePages/Bookslist.aspx?debug=true&noredir=true&debugManifestsFile=https://localhost:4321/temp/manifests.js"
+  "initialPage": "https://7mcbww.sharepoint.com/sites/dev/SitePages/Bookslist.aspx?debug=true&noredir=true&debugManifestsFile=https://localhost:4321/temp/manifests.js",
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://7mcbww.sharepoint.com/sites/dev/SitePages/Bookslist.aspx?debug=true&noredir=true&debugManifestsFile=https://localhost:4321/temp/manifests.js",
+      "customActions": {
+        "812d8c13-5af2-48ed-a16d-069966dd9b2f": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "Top":"Top area of the page",
+            "Bottom":"Bottom area of the page"
+          }
+        }
+      }
+    },
+    "helloWorld": {
+      "pageUrl": "https://7mcbww.sharepoint.com/sites/dev/SitePages/Bookslist.aspx?debug=true&noredir=true&debugManifestsFile=https://localhost:4321/temp/manifests.js",
+      "customActions": {
+        "812d8c13-5af2-48ed-a16d-069966dd9b2f": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "Top":"Top area of the page",
+            "Bottom":"Bottom area of the page"
+          }
+        }
+      }
+    }
+  }
 }

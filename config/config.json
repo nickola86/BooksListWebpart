@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/booksList/BooksListWebPart.manifest.json"
         }
       ]
+    },
+    "hello-world-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/helloWorld/HelloWorldApplicationCustomizer.js",
+          "manifest": "./src/extensions/helloWorld/HelloWorldApplicationCustomizer.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "BooksListWebPartStrings": "lib/webparts/booksList/loc/{locale}.js"
+    "BooksListWebPartStrings": "lib/webparts/booksList/loc/{locale}.js",
+    "HelloWorldApplicationCustomizerStrings": "lib/extensions/helloWorld/loc/{locale}.js"
   }
 }
