@@ -22,6 +22,7 @@ export default class HelloWorldApplicationCustomizer
 
     this.context.placeholderProvider.changedEvent.add(this, this._renderPlaceHolders);
     
+    this.context.application.navigatedEvent.add(this,this._myrender)
     return Promise.resolve();
   }
   private _onDispose(): void {
@@ -59,7 +60,7 @@ export default class HelloWorldApplicationCustomizer
           this._topPlaceholder.domElement.innerHTML = `
           <div id="topPlaceholder" class="${styles.app}">
             <div class="${styles.top}">
-              Bookslist app
+              Avanade book's crossing app
             </div>
           </div>`;
         }
@@ -94,15 +95,20 @@ export default class HelloWorldApplicationCustomizer
       }
     }
 
+
+  }
+
+  private _myrender =  () => {
+    
+    //Soluzione "a calci in footer"
     setTimeout(()=>{
-        
+      console.log("_myrender!")
       document.getElementById("SuiteNavWrapper").style.display='none';
       document.getElementById("sp-appBar").style.display='none';
-      document.getElementById("spSiteHeader").style.display='none';
       document.getElementById("spCommandBar").style.display='none';
       document.getElementById("CommentsWrapper").style.display='none';
       document.getElementsByTagName("footer")[0].style.display='none';
-      
+      document.getElementById("spSiteHeader").style.display='none';
     },1000)
 
   }
