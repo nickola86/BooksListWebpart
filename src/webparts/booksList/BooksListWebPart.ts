@@ -9,7 +9,7 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import * as strings from 'BooksListWebPartStrings';
-import BooksList, { IBooksListProps } from './components/BooksList';
+import { BooksListFunctional, IBooksListProps } from './components/BooksListFunctional';
 import SPHelper from './helpers/SPContextHelper';
 
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
@@ -26,7 +26,7 @@ export default class BooksListWebPart extends BaseClientSideWebPart<IBooksListWe
   public render(): void {
     
     const element: React.ReactElement<IBooksListProps> = React.createElement(
-      BooksList,
+      BooksListFunctional,
       {
         description: this.properties.description,
         isDarkTheme: this._isDarkTheme,
