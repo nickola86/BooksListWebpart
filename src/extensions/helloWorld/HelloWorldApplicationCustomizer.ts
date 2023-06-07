@@ -99,8 +99,6 @@ export default class HelloWorldApplicationCustomizer
   }
 
   private _myrender =  () => {
-    
-    //Soluzione "a calci in footer"
     setTimeout(()=>{
       console.log("_myrender!")
       document.getElementById("SuiteNavWrapper").style.display='none';
@@ -109,7 +107,6 @@ export default class HelloWorldApplicationCustomizer
       document.getElementById("CommentsWrapper").style.display='none';
       document.getElementsByTagName("footer")[0].style.display='none';
       document.getElementById("spSiteHeader").style.display='none';
-    },1000)
-
+    },2000)
   }
 }
