@@ -5,9 +5,6 @@
     --_r: calc((var(--_w) - var(--_sz)) / 2);
     --_sz: 12cqi;
 
-    max-height: 200px;
-    max-width: 200px;
-  
     background: #222;
     block-size: var(--_ow);
     border-radius: 50%;
@@ -16,6 +13,12 @@
     font-family: ui-sans-serif, system-ui, sans-serif;
     inline-size: var(--_ow);
     place-content: center;
+
+    max-height: 140px;
+    max-width: 140px;
+    position: absolute;
+    top:-95px;
+    right:30px;
   }
   
   .clock-face {
