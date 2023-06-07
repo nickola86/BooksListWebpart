@@ -77,7 +77,6 @@ export const BooksListFunctional = (props:IBooksListProps) => {
 
   const fetchData = async (): Promise<void> => {
     setIsLoading(true)
-    setIsReady(false)
     //Carico i libri
     const books = await booksService.getAll()    
     //Carico i libri nel cestino
@@ -215,7 +214,7 @@ export const BooksListFunctional = (props:IBooksListProps) => {
         <Clock></Clock>
         {
           isLoading && <>
-            <Spinner label={strings.booksLoading} />
+            <Spinner label={strings.booksLoading} className={styles.overlay} />
           </>
         }
         {
