@@ -10,8 +10,7 @@
         "812d8c13-5af2-48ed-a16d-069966dd9b2f": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
-            "Top":"Top area of the page",
-            "Bottom":"Bottom area of the page"
+            "Top":"Bookslist"
           }
         }
       }

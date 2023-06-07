@@ -1,16 +1,10 @@
 import styles from './AppCustomizer.module.scss';
-import { escape } from '@microsoft/sp-lodash-subset';
 
-import { Log } from '@microsoft/sp-core-library';
 import {
   BaseApplicationCustomizer,
   PlaceholderContent,
   PlaceholderName
 } from '@microsoft/sp-application-base';
-
-import * as strings from 'HelloWorldApplicationCustomizerStrings';
-
-const LOG_SOURCE: string = 'HelloWorldApplicationCustomizer';
 
 
 export interface IHelloWorldApplicationCustomizerProperties {
@@ -25,12 +19,9 @@ export default class HelloWorldApplicationCustomizer
   private _bottomPlaceholder: PlaceholderContent | undefined;
 
   public onInit(): Promise<void> {
-    Log.info(LOG_SOURCE, `Initialized ${strings.Title}`);
 
-    // Wait for the placeholders to be created (or handle them being changed) and then
-    // render.
     this.context.placeholderProvider.changedEvent.add(this, this._renderPlaceHolders);
-  
+    
     return Promise.resolve();
   }
   private _onDispose(): void {
@@ -68,9 +59,7 @@ export default class HelloWorldApplicationCustomizer
           this._topPlaceholder.domElement.innerHTML = `
           <div id="topPlaceholder" class="${styles.app}">
             <div class="${styles.top}">
-              <i class="ms-Icon ms-Icon--Info" aria-hidden="true"></i> ${escape(
-                topString
-              )}
+              Bookslist app
             </div>
           </div>`;
         }
@@ -99,14 +88,22 @@ export default class HelloWorldApplicationCustomizer
         if (this._bottomPlaceholder.domElement) {
           this._bottomPlaceholder.domElement.innerHTML = `
           <div id="bottomPlaceholder" class="${styles.app}">
-            <div class="${styles.bottom}">
-              <i class="ms-Icon ms-Icon--Info" aria-hidden="true"></i> ${escape(
-                bottomString
-              )}
-            </div>
+            <div class="${styles.bottom}"></div>
           </div>`;
         }
       }
     }
+
+    setTimeout(()=>{
+        
+      document.getElementById("SuiteNavWrapper").style.display='none';
+      document.getElementById("sp-appBar").style.display='none';
+      document.getElementById("spSiteHeader").style.display='none';
+      document.getElementById("spCommandBar").style.display='none';
+      document.getElementById("CommentsWrapper").style.display='none';
+      document.getElementsByTagName("footer")[0].style.display='none';
+      
+    },1000)
+
   }
 }
