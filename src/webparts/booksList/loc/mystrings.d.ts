@@ -37,6 +37,7 @@ declare interface IBooksListWebPartStrings {
   DataDiNascitaFieldLabel: any;
   EmailFieldLabel: any;
   DefaultUserPicture:string;
+  PhoneFieldLabel: any;
 }
 
 declare module 'BooksListWebPartStrings' {

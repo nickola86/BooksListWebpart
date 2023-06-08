@@ -1,16 +1,10 @@
 import * as React from 'react'
 import styles from './Card.module.scss'
 import * as strings from 'BooksListWebPartStrings';
+import { IUser } from '../services/UserService';
 
 export interface IIdentityCardProps {
   user:IUser
-}
-export interface IUser {
-  cognome: string;
-  nome: string;
-  email: string;
-  dataDiNascita: string;
-  immagine: string;
 }
   
 export const IdentityCard = (props:IIdentityCardProps): JSX.Element => {
@@ -26,7 +20,7 @@ export const IdentityCard = (props:IIdentityCardProps): JSX.Element => {
             <span className={styles.bold}>{strings.EmailFieldLabel}:</span> <span>{props?.user?.email}</span>
           </li>
           <li>
-            <span className={styles.bold}>{strings.DataDiNascitaFieldLabel}:</span> <span>{props?.user?.dataDiNascita}</span>
+            <span className={styles.bold}>{strings.PhoneFieldLabel}:</span> <span>{props?.user?.telefono}</span>
           </li>
         </ul>
       </div>
