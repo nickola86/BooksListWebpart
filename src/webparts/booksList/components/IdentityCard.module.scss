@@ -1,0 +1,93 @@
+@import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';
+
+.identityCard {
+  position:absolute;
+  top:-100px;
+  left:0px;
+  z-index: 100;
+  overflow: hidden;
+  padding: 1em;
+  color: "[theme:bodyText, default: #323130]";
+  color: var(--bodyText);
+  &.teams {
+    font-family: $ms-font-family-fallbacks;
+  }
+}
+
+.welcome {
+  text-align: center;
+}
+
+.welcomeImage {
+  width: 100%;
+  max-width: 420px;
+}
+
+.links {
+  a {
+    text-decoration: none;
+    color: "[theme:link, default:#03787c]";
+    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
+
+    &:hover {
+      text-decoration: underline;
+      color: "[theme:linkHovered, default: #014446]";
+      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
+    }
+  }
+}
+
+.card{
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px 0px #999;
+  display:inline-flex;
+  transition:all ease 0.2s;
+  z-index:1;
+  margin:1em;
+  color:#333;
+  &.dark{
+    background-color:#333;
+    box-shadow: 0px 4px 8px 0px #eee;
+    color: #ddd;  
+    .data{
+      .bold{
+        font-weight:600;
+        color:#fff;
+      }
+    }
+  }
+  &:hover{
+    z-index:2;
+    transform: scale(1.05);
+    box-shadow: 0px 10px 16px 0px #999;
+  }
+  &.dark:hover{
+    box-shadow: 0px 10px 16px 0px #eee;
+  }
+  .data{
+    margin:20px;
+    ul{
+      margin:0;
+      padding:0;
+    }
+    li{
+      list-style-type: none;  
+      text-align:left;
+      font-family:IBM Plex Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+      line-height:2em;
+      .bold{
+        font-weight:600;
+        color:#000;
+      }
+    }
+  }
+  .picture{
+    margin:0;
+    margin-bottom:-4px;
+    img{
+      border-bottom-right-radius:8px;
+      border-top-right-radius:8px;
+      height:180px;    
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { IBook, IBookRecycled, IBooksList } from '../types/IBooksList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { CheckboxVisibility, DetailsList, IColumn, Selection } from '@fluentui/react/lib/DetailsList';
 import * as strings from 'BooksListWebPartStrings';
-import { CommandBar, DefaultButton, FontIcon, ICommandBarItemProps, ICommandBarStyles, IContextualMenuItem, Label, Spinner, TextField } from '@fluentui/react';
+import { CommandBar, DefaultButton, FontIcon, ICommandBarItemProps, ICommandBarStyles, IContextualMenuItem, Label, Spinner, SpinnerSize, TextField } from '@fluentui/react';
 
 import booksService from '../services/BooksService';
 import recycleBinService from '../services/RecycleBinService';
@@ -75,7 +75,7 @@ export default class BooksList extends React.Component<IBooksListProps, IBooksLi
         <Clock></Clock>
         {
           !isReady && <>
-            <Spinner label={strings.booksLoading} />
+            <Spinner size={SpinnerSize.large} label={strings.booksLoading} />
           </>
         }
         {

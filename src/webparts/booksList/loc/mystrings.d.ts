@@ -34,6 +34,9 @@ declare interface IBooksListWebPartStrings {
   actions: string;
   deleteRow: string;
   addRow: string;
+  DataDiNascitaFieldLabel: any;
+  EmailFieldLabel: any;
+  DefaultUserPicture:string;
 }
 
 declare module 'BooksListWebPartStrings' {

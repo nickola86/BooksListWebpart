@@ -3,7 +3,7 @@
   "solution": {
     "name": "list-with-fluent-ui-client-side-solution",
     "id": "01c41952-1dea-4d35-8edb-13eec624cf82",
-    "version": "1.0.0.0",
+    "version": "1.0.0.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -37,6 +37,12 @@
             "ClientSideInstance.xml"
           ]
         }
+      }
+    ],
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.Read"
       }
     ]
   },

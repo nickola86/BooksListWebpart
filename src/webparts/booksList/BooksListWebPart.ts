@@ -13,6 +13,7 @@ import { BooksListFunctional, IBooksListProps } from './components/BooksListFunc
 import SPHelper from './helpers/SPContextHelper';
 
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
+import GraphContextHelper from './helpers/GraphContextHelper';
 
 export interface IBooksListWebPartProps {
   description: string;
@@ -41,6 +42,7 @@ export default class BooksListWebPart extends BaseClientSideWebPart<IBooksListWe
 
   protected onInit(): Promise<void> {
     SPHelper.init(this.context);
+    GraphContextHelper.init(this.context);
     return this._getEnvironmentMessage().then(message => {
       this._environmentMessage = message;
     });

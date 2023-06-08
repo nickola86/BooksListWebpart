@@ -18,6 +18,7 @@ import recycleBinService from '../services/RecycleBinService';
 import { RecycledBook } from './RecycledBook';
 import { BookModal } from './BookModal';
 import { Clock } from './Clock';
+import { User } from './User';
 
 export interface IBooksListProps {
   description: string;
@@ -32,7 +33,7 @@ function _copyAndSort<T>(items: T[], columnKey: string, isSortedDescending?: boo
   return items.slice(0).sort((a: T, b: T) => ((isSortedDescending ? a[key] < b[key] : a[key] > b[key]) ? 1 : -1));
 }
 
-export const BooksListFunctional = (props:IBooksListProps) => {
+export const BooksListFunctional = (props:IBooksListProps): JSX.Element => {
 
   const queryClient = new QueryClient()
 
@@ -49,8 +50,10 @@ export const BooksListFunctional = (props:IBooksListProps) => {
     switch (selectionCount) {
       case 0:
         message = strings.noItemsSelected;
+        break;
       case 1:
         message = strings.oneItemSelected;
+        break;
       default:
         message = `${selectionCount} ${strings.itemsSelected}`;
     }
@@ -96,6 +99,27 @@ export const BooksListFunctional = (props:IBooksListProps) => {
     setIsLoading(false)
     setIsReady(true)
   }
+  const _onAddRow = (ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
+    setIsBookModalOpen(true)
+    return;
+  }
+  const _onDeleteRow = (): void => {
+    if (selection.getSelectedCount() > 0) {
+      //Cancello tutti i libri selezionati
+      try{
+        Promise.all(selection.getSelection().map((book:IBook)=>{
+          return booksService.deleteItem(book.id)
+        })).then(async ()=>{
+          //ricarico i dati della pagina
+          await fetchData()
+        }).catch((e)=>{
+          console.error(e)
+        })
+      }catch(e){
+        console.error(e)
+      }
+    }
+  }
 
   const _getCommandItems = (): ICommandBarItemProps[] => {
     return [
@@ -120,10 +144,6 @@ export const BooksListFunctional = (props:IBooksListProps) => {
     await fetchData()
   }
 
-  const _onAddRow = (ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>, item?: IContextualMenuItem): void => {
-    setIsBookModalOpen(true)
-    return;
-  }
   const _onBookModalClose = async (book:IBook,save:boolean):Promise<void> => {
     if(save && !!book.id) {
       //Se l'elemento ha già un ID, lo sto aggiornando
@@ -134,24 +154,6 @@ export const BooksListFunctional = (props:IBooksListProps) => {
     }
     //Ricarico i dati in pagina
     await fetchData()
-  }
-
-  const _onDeleteRow = (): void => {
-    if (selection.getSelectedCount() > 0) {
-      //Cancello tutti i libri selezionati
-      try{
-        Promise.all(selection.getSelection().map((book:IBook)=>{
-          return booksService.deleteItem(book.id)
-        })).then(async ()=>{
-          //ricarico i dati della pagina
-          await fetchData()
-        }).catch((e)=>{
-          console.error(e)
-        })
-      }catch(e){
-        console.error(e)
-      }
-    }
   }
 
   const _onRestoreFromRecycle = async (id:string): Promise<void> => {
@@ -202,16 +204,15 @@ export const BooksListFunctional = (props:IBooksListProps) => {
 
   const commandBarStyles: Partial<ICommandBarStyles> = { root: { marginLeft:'0px', paddingLeft:'0px', marginBottom: '10px' } };
 
-  React.useEffect(()=> {
-    console.log("Effect fetchData!")
-    fetchData()  
-    console.log("Effect post fetchData!")
+  React.useEffect(():void=> {
+    fetchData()
   }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
       <section className={`${styles.booksList} ${hasTeamsContext ? styles.teams : ''}`}>
         <Clock></Clock>
+        <User />
         {
           isLoading && <>
             <Spinner label={strings.booksLoading} className={styles.overlay} />

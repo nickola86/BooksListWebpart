@@ -37,6 +37,11 @@ define([], function() {
     "newBook": "Nuovo libro",
     "editBook": "Modifica libro",
 
-    "cleanRecycleBin": "Svuota cestino"
+    "cleanRecycleBin": "Svuota cestino",
+    
+    "DataDiNascitaFieldLabel":"Data di nascita",
+    "EmailFieldLabel":"Email",
+
+    "DefaultUserPicture":"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
   }
 });

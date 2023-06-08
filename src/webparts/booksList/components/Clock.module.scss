@@ -22,7 +22,7 @@
     z-index:1;
   }
   
-  .clock-face {
+  .clockFace {
     aspect-ratio: 1;
     background: var(--_bgc, #FFF);
     border-radius: 50%;
@@ -35,7 +35,7 @@
     position: relative;
   }
   
-  .clock-face time {
+  .clockFace time {
     --_x: calc(var(--_r) + (var(--_r) * cos(var(--_d))));
     --_y: calc(var(--_r) + (var(--_r) * sin(var(--_d))));
     display: grid;
@@ -47,18 +47,18 @@
     width: var(--_sz);
   }
   
-  .clock-face time:nth-child(1) { --_d: 270deg; }
-  .clock-face time:nth-child(2) { --_d: 300deg; }
-  .clock-face time:nth-child(3) { --_d: 330deg; }
-  .clock-face time:nth-child(4) { --_d: 0deg; }
-  .clock-face time:nth-child(5) { --_d: 30deg; }
-  .clock-face time:nth-child(6) { --_d: 60deg; }
-  .clock-face time:nth-child(7) { --_d: 90deg; }
-  .clock-face time:nth-child(8) { --_d: 120deg; }
-  .clock-face time:nth-child(9) { --_d: 150deg; }
-  .clock-face time:nth-child(10) { --_d: 180deg; }
-  .clock-face time:nth-child(11) { --_d: 210deg; }
-  .clock-face time:nth-child(12) { --_d: 240deg; }
+  .clockFace time:nth-child(1) { --_d: 270deg; }
+  .clockFace time:nth-child(2) { --_d: 300deg; }
+  .clockFace time:nth-child(3) { --_d: 330deg; }
+  .clockFace time:nth-child(4) { --_d: 0deg; }
+  .clockFace time:nth-child(5) { --_d: 30deg; }
+  .clockFace time:nth-child(6) { --_d: 60deg; }
+  .clockFace time:nth-child(7) { --_d: 90deg; }
+  .clockFace time:nth-child(8) { --_d: 120deg; }
+  .clockFace time:nth-child(9) { --_d: 150deg; }
+  .clockFace time:nth-child(10) { --_d: 180deg; }
+  .clockFace time:nth-child(11) { --_d: 210deg; }
+  .clockFace time:nth-child(12) { --_d: 240deg; }
   
   .arm {
     background-color: var(--_abg);

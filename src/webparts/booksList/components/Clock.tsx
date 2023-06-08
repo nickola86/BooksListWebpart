@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect } from 'react'
 import styles from './Clock.module.scss'
-export const Clock = () => {
+export const Clock = (): JSX.Element => {
     useEffect(()=>{
         const time = new Date();
         const hour = -3600 * (time.getHours() % 12);
@@ -10,7 +10,7 @@ export const Clock = () => {
         document.getElementById("clock-board").style.setProperty('--_dh', `${(hour+mins)}s`); 
     },[])
     return <div className={styles.clock}>
-        <div className={styles['clock-face']} id="clock-board">
+        <div className={styles.clockFace} id="clock-board">
             <time dateTime="12:00">12</time>
             <time dateTime="1:00">1</time>
             <time dateTime="2:00">2</time>

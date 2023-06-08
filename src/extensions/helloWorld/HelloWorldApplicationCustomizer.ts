@@ -98,15 +98,14 @@ export default class HelloWorldApplicationCustomizer
 
   }
 
-  private _myrender =  () => {
+  private _myrender =  ():void => {
     setTimeout(()=>{
-      console.log("_myrender!")
-      document.getElementById("SuiteNavWrapper").style.display='none';
-      document.getElementById("sp-appBar").style.display='none';
-      document.getElementById("spCommandBar").style.display='none';
-      document.getElementById("CommentsWrapper").style.display='none';
-      document.getElementsByTagName("footer")[0].style.display='none';
-      document.getElementById("spSiteHeader").style.display='none';
-    },2000)
+      document.getElementById("SuiteNavWrapper").remove();
+      document.getElementById("sp-appBar").remove();
+      document.getElementById("spCommandBar").remove();
+      document.getElementById("CommentsWrapper").remove();
+      document.getElementsByTagName("footer")[0].remove()
+      document.getElementById("spSiteHeader").remove();
+    },3000)
   }
 }
