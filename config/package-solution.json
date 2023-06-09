@@ -3,7 +3,7 @@
   "solution": {
     "name": "list-with-fluent-ui-client-side-solution",
     "id": "01c41952-1dea-4d35-8edb-13eec624cf82",
-    "version": "1.0.0.1",
+    "version": "1.0.0.2",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
