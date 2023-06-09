@@ -211,36 +211,32 @@ export const BooksListFunctional = (props:IBooksListProps): JSX.Element => {
   return (
     <QueryClientProvider client={queryClient}>
       <section className={`${styles.booksList} ${hasTeamsContext ? styles.teams : ''}`}>
-        <Clock></Clock>
         <User />
-        {
-          isLoading && <>
-            <Spinner label={strings.booksLoading} className={styles.overlay} />
-          </>
-        }
-        {
-          isReady && <>
-            <MarqueeSelection selection={selection}>
-              <CommandBar styles={commandBarStyles} items={_getCommandItems()} />
-              <TextField label={strings.filterByName} onChange={_onChangeText} />
-              <DetailsList
-                checkboxVisibility={CheckboxVisibility.always}
-                items={items}
-                columns={columns}
-                selection={selection}
-                onColumnHeaderClick={_onColumnClick}
-                onRenderRow={(props, defaultRender) => defaultRender({...props, className: styles.row})}    
-                onRenderItemColumn={_onRenderItemColumn}
-              />
-            </MarqueeSelection>
-            <BookModal 
-              isModalOpen={isBookModalOpen} 
-              isEditMode={!!currentBook?.id} 
-              book={currentBook} 
-              onCloseCallback={_onBookModalClose}
+        <Clock></Clock>
+        <MarqueeSelection selection={selection}>
+          <CommandBar styles={commandBarStyles} items={_getCommandItems()} />
+          <TextField label={strings.filterByName} onChange={_onChangeText} />
+          {
+            isLoading && <Spinner label={strings.booksLoading} className={styles.overlay} />
+          }
+          {
+            isReady && <DetailsList
+              checkboxVisibility={CheckboxVisibility.always}
+              items={items}
+              columns={columns}
+              selection={selection}
+              onColumnHeaderClick={_onColumnClick}
+              onRenderRow={(props, defaultRender) => defaultRender({...props, className: styles.row})}    
+              onRenderItemColumn={_onRenderItemColumn}
             />
-          </>
-        }
+          }          
+        </MarqueeSelection>
+        <BookModal 
+          isModalOpen={isBookModalOpen} 
+          isEditMode={!!currentBook?.id} 
+          book={currentBook} 
+          onCloseCallback={_onBookModalClose}
+        />
         {
           isReady && items.length>0 &&
             <p style={{marginTop:'2em',textAlign:"center", fontStyle:'italic'}}>{selectionMessage}</p>          

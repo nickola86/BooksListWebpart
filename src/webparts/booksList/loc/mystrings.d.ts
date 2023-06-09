@@ -38,6 +38,8 @@ declare interface IBooksListWebPartStrings {
   EmailFieldLabel: any;
   DefaultUserPicture:string;
   PhoneFieldLabel: any;
+  LibraryCard: any;
+
 }
 
 declare module 'BooksListWebPartStrings' {

@@ -23,7 +23,6 @@ export class UserService extends GraphContextHelper implements IUserService {
             const photoValue = await GraphContextHelper.graph().me.photo.getBlob();
             const url = window.URL || window.webkitURL;
             const immagine = url.createObjectURL(photoValue);
-            
             return {
                 cognome: user.surname,
                 nome: user.givenName,
