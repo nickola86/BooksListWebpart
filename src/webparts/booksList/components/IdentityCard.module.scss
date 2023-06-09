@@ -12,6 +12,13 @@
   &.teams {
     font-family: $ms-font-family-fallbacks;
   }
+  .loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width:200px;
+    padding-top:50px;
+  }
 }
 
 .welcome {
